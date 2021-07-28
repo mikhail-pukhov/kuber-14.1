@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-dep
+  labels:
+    app: test-dep
+spec:
+  selector:
+    matchLabels:
+      app: test-dep
+  template:
+    metadata:
+      labels:
+        app: test-dep
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        - containerPort: 443
+          protocol: TCP
+        volumeMounts:
+        - name:  certs
+          mountPath:  "/etc/nginx/ssl" 
+          readOnly: true
+          mountPath:  /etc/nginx/config.d 
+          readOnly: true
+      volumes:
+      - name: certs
+        secret:
+          secretName: domain-cert
+      - name: config
+        configMap:
+          name: nginx -config 
