@@ -23,8 +23,9 @@ spec:
           protocol: TCP
         volumeMounts:
         - name:  certs
-          mountPath:  "/etc/nginx/ssl" 
+          mountPath:  "/etc/nginx/ssl"
           readOnly: true
+        - name:  config
           mountPath:  /etc/nginx/config.d 
           readOnly: true
       volumes:
@@ -33,4 +34,4 @@ spec:
           secretName: domain-cert
       - name: config
         configMap:
-          name: nginx -config 
+          name: nginx-config 
